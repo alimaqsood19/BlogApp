@@ -1,16 +1,15 @@
 const mongoose = require('mongoose');
 const redis = require('redis');
 const util = require('util');
+const keys = require('../config/keys');
 
-const redisUrl = 'redis://127.0.0.1:6379';
+const redisUrl = keys.redisUrl;
 const client = redis.createClient(redisUrl);
 client.get = util.promisify(client.get); //returns a promisifcation of client.get, since client.get originally has an error first call back
 
 const exec = mongoose.Query.prototype.exec; //Reference to the original exec function
 
 mongoose.Query.prototype.exec = async function() {
-  console.log('Im about to run a query');
-
   // console.log(this.getQuery()); Grabs the query object
   // console.log(this.mongooseCollection.name); Grabs the collection being queried
 

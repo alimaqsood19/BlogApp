@@ -1,0 +1,32 @@
+# The language of the travis CI server
+language: node_js
+# Version of Node
+node_js: 
+  - "8"
+# Operating system of the travis CI server called trusty
+dist: trusty
+# Services to be installed onto the server
+services: 
+  - mongodb
+  - redis-server
+# environment variable being set to have the proper env.keys to be used
+env: 
+  - NODE_ENV=ci PORT=3000
+# caches folders to speed up build process
+cache:
+  directories: 
+    - node_modules
+    - client/node_modules
+# Things to run on the server
+install: 
+  - npm install 
+  - npm run build
+# scripts is like install, execute some scripts/tests
+# &: run this command in a subshell (in the background)
+# nohup: if the shell is closed, dont kill anything this command creates, no hangup
+# All of this starts up our server and makes sure it keeps running while allowing us to run other commands
+# sleep 3 means sleep for 3 seconds allows server to startup properly
+script: 
+  - nohup npm run start &
+  - sleep 3 
+  - npm run test
