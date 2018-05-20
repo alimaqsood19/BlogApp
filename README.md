@@ -1,2 +1,4 @@
-# AdvancedNodeStarter
-Starting project for a course on Advanced Node @ Udemy
+# Blog Application
+
+##Technologies
+React, Redux, MongoDB, Redis, Travis CI, Express, Headless Browser testing via Chromium
