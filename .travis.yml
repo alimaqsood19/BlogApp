@@ -22,6 +22,7 @@ install:
   - npm install 
   - npm run build
 # scripts is like install, execute some scripts/tests
+# Dev mode runs up Port 3000 for client server and port 5000 for the server, 
 # &: run this command in a subshell (in the background)
 # nohup: if the shell is closed, dont kill anything this command creates, no hangup
 # All of this starts up our server and makes sure it keeps running while allowing us to run other commands

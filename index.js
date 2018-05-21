@@ -29,6 +29,7 @@ require('./routes/authRoutes')(app);
 require('./routes/blogRoutes')(app);
 
 if (['production', 'ci'].includes(process.env.NODE_ENV)) {
+  //if process.env.NODE_ENV === production || ci then serve up the clien/build files
   app.use(express.static('client/build'));
 
   const path = require('path');

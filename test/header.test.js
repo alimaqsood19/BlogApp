@@ -12,7 +12,7 @@ beforeEach(async () => {
 
   page = await Page.build(); //Gives us back page instance by caling the static build function
   //page will allow us to make clicks or render different things, tests will interact with this page variable
-  await page.goto('localhost:3000'); //Once page is launched, telling page to visit this URL
+  await page.goto('http://localhost:3000'); //Once page is launched, telling page to visit this URL
 });
 
 afterEach(async () => {

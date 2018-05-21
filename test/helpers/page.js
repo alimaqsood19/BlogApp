@@ -5,7 +5,8 @@ const userFactory = require('../factories/userFactory');
 class CustomPage {
   static async build() {
     const browser = await puppeteer.launch({
-      headless: false
+      headless: true,
+      args: ['--no-sandbox'] //Dramatically decreases the time for our tests to run
     });
 
     //Creating the puppeteer page
@@ -33,7 +34,7 @@ class CustomPage {
     await this.page.setCookie({ name: 'session', value: session });
     await this.page.setCookie({ name: 'session.sig', value: sig });
     //Refresh the page so the app re-renders once we have "logged in" with the set cookies
-    await this.page.goto('localhost:3000/blogs'); //Redirect back to blogs route which is desired
+    await this.page.goto('http://localhost:3000/blogs'); //Redirect back to blogs route which is desired
 
     //add WaitFor function to wait for this element to appear after the refresh from above
     await this.page.waitFor('a[href="/auth/logout"]'); //waits for logout button to appear
