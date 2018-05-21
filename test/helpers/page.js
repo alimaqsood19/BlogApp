@@ -43,6 +43,46 @@ class CustomPage {
     //Wheenver we want to get the contents of a selector we can call this function
     return this.page.$eval(selector, el => el.innerHTML);
   }
+
+  get(path) {
+    //For the GET request
+    return this.page.evaluate(_path => {
+      //passing in an arrow function to the .evaluate method needed because chromium needs to turn the code into a string -> into js -> execute and then return the result back to our testing environment
+      return fetch(_path, {
+        method: 'GET',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(res => res.json());
+    }, path); //Second argument is path that can be referenced within this scope
+  }
+
+  post(path, data) {
+    return this.page.evaluate(
+      (_path, _data) => {
+        return fetch('/api/blogs', {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(_data)
+        }).then(res => res.json());
+      },
+      path,
+      data
+    );
+  }
+
+  execRequests(actions) {
+    return Promise.all(
+      //Will return one single promise
+      actions.map(({ method, path, data }) => {
+        return this[method](path, data); //this[method] is refering to the page get or post methods declared above
+      }) //passing in the appropriate path and data arguments
+    ); //Going to result with an array of promises, Promise.all waits for all promises to resolve
+  }
 }
 
 module.exports = CustomPage;
