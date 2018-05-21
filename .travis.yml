@@ -10,6 +10,7 @@ services:
   - mongodb
   - redis-server
 # environment variable being set to have the proper env.keys to be used
+# Need the PORT to tell Travis to run our express server on port 3000
 env: 
   - NODE_ENV=ci PORT=3000
 # caches folders to speed up build process
